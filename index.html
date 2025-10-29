@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cagoco-Diong Portfolio</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Page base */
+    body {
+      /* soft dark gradient as a sensible fallback */
+      background: radial-gradient(circle at top, #071425 0%, #0a0a0a 60%);
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: sticky;
+      top: 0;
+      background: rgba(10, 10, 10, 0.9);
+      z-index: 10;
+    }
+
+    nav h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #0ff;
+      letter-spacing: 2px;
+    }
+
+    nav h1 span {
+      color: #fff;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #0ff;
+    }
+
+    section {
+      display: none;
+      padding: 5rem 2rem;
+      animation: fadeIn 0.6s ease-in-out;
+      min-height: 80vh;
+    }
+
+    section-2 {
+      padding: 60px 20px;
+      min-height: 80vh;
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SITE BACKGROUND - animated soft blobs + subtle texture */
+    .site-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-blob {
+      position: absolute;
+      width: 60vmax;
+      height: 60vmax;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.8;
+      transform: translate3d(0,0,0);
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+
+    .bg-blob.b1 {
+      background: radial-gradient(circle at 30% 30%, #00f6ff 0%, #0077ff 40%, rgba(0,119,255,0) 60%);
+      top: -20%;
+      left: -10%;
+      animation: blobMove 20s ease-in-out infinite;
+    }
+
+    .bg-blob.b2 {
+      background: radial-gradient(circle at 70% 40%, #ff6ec7 0%, #ff8a00 40%, rgba(255,138,0,0) 60%);
+      bottom: -25%;
+      right: -5%;
+      animation: blobMove 24s ease-in-out infinite;
+      opacity: 0.75;
+      animation-delay: 2s;
+    }
+
+    .bg-blob.b3 {
+      background: radial-gradient(circle at 50% 50%, #8affc1 0%, #00b3ff 40%, rgba(0,179,255,0) 60%);
+      top: 10%;
+      right: -20%;
+      animation: blobMove 28s ease-in-out infinite;
+      opacity: 0.7;
+      animation-delay: 4s;
+    }
+
+    @keyframes blobMove {
+      0% { transform: translate(0,0) scale(1); }
+      25% { transform: translate(-6vw, 4vh) scale(1.05); }
+      50% { transform: translate(8vw, -6vh) scale(1.08); }
+      75% { transform: translate(-4vw, 6vh) scale(1.03); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+
+    /* subtle textured overlay to avoid perfectly flat color */
+    .site-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.015) 0%, transparent 20%),
+                        radial-gradient(circle at 80% 80%, rgba(0,0,0,0.02) 0%, transparent 20%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Respect user preference for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .bg-blob { animation: none; }
+    }
+
+    .home {
+      text-align: center;
+    }
+
+    
+
+    .person {
+      background: rgb(63, 233, 255);
+      box-shadow: 0 8px 20px rgba(74, 144, 226, 0.15);
+      border-radius: 12px;
+      padding: 30px;
+      flex: 1 1 400px;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .person:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(74, 144, 226, 0.3);
+    }
+
+    .person img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 4px solid #4a90e2;
+    }
+
+    .person h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .person p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .projects {
+      text-align: center;
+    }
+
+    .projects h2 {
+      color: #0ff;
+      margin-bottom: 2rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #0ff;
+      border-radius: 10px;
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card img {
+      width: 370px;
+      height: 106px;
+      border: 4px solid #0ff;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact h2 {
+      color: #0ff;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 2rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #0ff;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 1rem;
+      background: #0ff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00cccc;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Ensure main content sits above the animated background */
+    main {
+      position: relative;
+      z-index: 11;
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative site background (behind content) -->
+  <div class="site-bg" aria-hidden="true">
+    <span class="bg-blob b1"></span>
+    <span class="bg-blob b2"></span>
+    <span class="bg-blob b3"></span>
+  </div>
+  <nav>
+    <h1>Cagoco-Diong<span>Portfolio</span></h1>
+    <ul>
+      <li><a class="active" onclick="showSection('home')">Home</a></li>
+      <li><a onclick="showSection('projects')">Projects</a></li>
+      <li><a onclick="showSection('contact')">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+  <!-- Home -->
+  <section-2 id="home">
+    <div class="person">
+      <img src="C:\Users\7BLab\Documents\CAGOCO2626\FB_IMG_1757492975654.jpg" alt="Person 1" />
+      <h2>Franco Cagoco</h2>
+      <p>Hi, you can call me Anco for short. I'm student in Holy Name University, a BSIT student. I am from the province of Isabela but for now I live in Bohol for educational purposes. My favourite color is black and I love playing online games in mopbile or in PC. Lastly, I want to explore Bohol for experience before going bcak in my homeland.
+       </p>
+    </div>
+    <div class="person">
+      <img src="Diong_Profile.png" alt="Person 2" width="100" height="100"/>
+      <h2>Mark Vincent Diong</h2>
+      <p>Hello, I'm Mark Vincent P. Diong, 19 years old. I live in Poblacion, San Miguel, Bohol. Now, I'm currently studying at Holy Name University in Tagbilaran City Bohol, taking up Bachelor of Science in Information Technology and a 2nd year student. My hobbies include playing video games and I love's playing chess, reading books, and exploring new things in life.</p>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects">
+    <h2>Our Projects</h2>
+    <div class="project-grid">
+      <div class="card">
+        <img src="C:\Users\7BLab\Documents\CAGOCO2626\FB_IMG_1757492975654.jpg" />
+        <h3>Cagoco's Project</h3>
+        <p>N/A.</p>
+      </div>
+      <div class="card">
+        <img src="C:\Users\7BLab\Documents\CAGOCO2626\FB_IMG_1757492975654.jpg" />
+        <h3>Diong's Project</h3>
+        <p>N/A</p>
+      </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <input type="Cellphone Number" placeholder="Your CP #" required />
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
